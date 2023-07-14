@@ -24,9 +24,10 @@ app.get('/ping', async (req, res)=>{
 app.post('/verifyUser', async (req, res)=>{
     
     const email = req.body.email
-    res.send(email);
-    /*const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
-    if(existe[0].length > 1){
+    
+    const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
+    res.send(existe);
+    /*if(existe[0].length > 1){
        
         console.log(existe);
         res.json(existe[0][0])
