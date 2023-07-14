@@ -24,7 +24,8 @@ app.get('/ping', async (req, res)=>{
 app.post('/verifyUser', async (req, res)=>{
     
     const email = req.body.email
-    const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
+    res.send(email);
+    /*const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
     if(existe[0].length > 1){
        
         console.log(existe);
@@ -32,9 +33,12 @@ app.post('/verifyUser', async (req, res)=>{
         
     }
     else{
-        res.json('not found')
         res.status(400);
-    }
+        res.json('not found')
+        
+    } */
+
+    
 })
 
 app.get('/create',async(req,res)=>{
