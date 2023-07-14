@@ -41,6 +41,20 @@ app.get('/create',async(req,res)=>{
     await pool.query('INSERT INTO users(user, invitados) values("Viridiana", 2)');
     res.redirect('/users')
 })
-
+app.post('/verifyUser', async (req, res)=>{
+    
+    const email = req.body.email
+    const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
+    if(existe[0].length > 1){
+       
+        console.log(existe);
+        res.json(existe[0][0])
+        
+    }
+    else{
+        res.json('not found')
+        res.status(400);
+    }
+})
 app.listen(PORT);
 console.log("Server on port: ", PORT)
