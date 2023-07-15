@@ -26,8 +26,8 @@ app.post('/verifyUser', async (req, res)=>{
     const email = req.body.email
     
     const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
-    res.send(existe);
-    /*if(existe[0].length > 1){
+   
+    if(existe[0].length > 0){
        
         console.log(existe);
         res.json(existe[0][0])
@@ -37,7 +37,7 @@ app.post('/verifyUser', async (req, res)=>{
         res.status(400);
         res.json('not found')
         
-    } */
+    } 
 
     
 })
