@@ -24,7 +24,7 @@ app.get('/ping', async (req, res)=>{
 
 
 app.get('/create',async(req,res)=>{
-    await pool.query('INSERT INTO users(user, invitados) values("Viridiana", 2)');
+    await pool.query('INSERT INTO users(user, invitados) values("live_carr@hotmail.com", 2)');
     res.redirect('/users')
 })
 app.post('/verifyUser', async (req, res)=>{
