@@ -34,7 +34,7 @@ app.post('/verifyUser', async (req, res)=>{
     if(existe[0].length > 1){
        
         console.log(existe);
-        res.json(existe[0][0])
+        return res.json(existe[0][0])
         
     }
     else{
