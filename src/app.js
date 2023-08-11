@@ -2,8 +2,9 @@ import  express  from "express";
 import { pool } from "./db.js";
 import bodyParser from "body-parser";
 import { PORT} from "./config.js";
+import cors from "cors";
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -12,8 +13,9 @@ app.get('/', (req, res) => {
 
 })
 app.get('/users', async(req, res)=>{
-        const [users] = await pool.query('SELECT * FROM users');
-        res.send(users)
+    //req.headers('Content-Type', 'application/json')
+    const [users] = await pool.query('SELECT * FROM users');
+    res.send(users)
 })
 app.get('/ping', async (req, res)=>{
      const [Bienvenida] = await pool.query('SELECT "Hello world" AS Bienvenida');
@@ -24,17 +26,21 @@ app.get('/ping', async (req, res)=>{
 
 
 app.get('/create',async(req,res)=>{
+  
     await pool.query('INSERT INTO users(user, invitados) values("live_carr@hotmail.com", 2)');
     res.redirect('/users')
 })
 app.post('/verifyUser', async (req, res)=>{
     
+   
     const email = req.body.email
+  
     const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
-    if(existe[0].length > 1){
+   
+    if(existe[0].length >= 1){
        
-        console.log(existe);
-        return res.json(existe[0][0])
+        
+        res.json(existe[0][0])
         
     }
     else{
