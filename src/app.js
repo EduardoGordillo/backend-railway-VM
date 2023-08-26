@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import { PORT} from "./config.js";
 import cors from "cors";
 const app = express();
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -27,7 +28,7 @@ app.get('/ping', async (req, res)=>{
 
 app.get('/create',async(req,res)=>{
   
-    await pool.query('INSERT INTO users(user, invitados) values("live_carr@hotmail.com", 2)');
+    await pool.query('INSERT INTO users(user, invitados) values("gabriel@hotmail.com", 0)');
     res.redirect('/users')
 })
 app.post('/verifyUser', async (req, res)=>{
@@ -37,6 +38,23 @@ app.post('/verifyUser', async (req, res)=>{
   
     const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
    
+    if(existe[0].length >= 1){
+       
+        
+        res.json(existe[0][0])
+        
+    }
+    else{
+        res.json('not found')
+        res.status(400);
+    }
+})
+app.post('/register', async (req, res)=>{
+    let email = req.body.email
+    let nombre = req.body.nombre
+    let invitados = req.body.invitados
+
+    const existe = await pool.query(`UPDATE users SET user = "${email}", nombre = "${nombre}", invitados = "${invitados}" where user = "${email}"`)
     if(existe[0].length >= 1){
        
         
