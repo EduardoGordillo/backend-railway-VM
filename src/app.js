@@ -32,7 +32,7 @@ app.get('/create',async(req,res)=>{
     await pool.query('INSERT INTO users(user, invitados) values("gabriel@hotmail.com", 0)');
     res.redirect('/users')
 })
-app.post('/verifyUser', async (req, res)=>{
+app.get('/verifyUser', async (req, res)=>{
     
    
     const email = req.body.email
