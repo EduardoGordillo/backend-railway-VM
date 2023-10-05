@@ -9,7 +9,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/', cors() , (req, res) => {
 
     res.send("welcome to server express, please enter your name and password");
 
@@ -32,7 +32,7 @@ app.get('/create',async(req,res)=>{
     await pool.query('INSERT INTO users(user, invitados) values("gabriel@hotmail.com", 0)');
     res.redirect('/users')
 })
-app.get('/verifyUser', async (req, res)=>{
+app.get('/verifyUser', cors(), async (req, res)=>{
     
    
     const email = req.body.email
@@ -50,7 +50,7 @@ app.get('/verifyUser', async (req, res)=>{
         res.status(400);
     }
 })
-app.post('/register', async (req, res)=>{
+app.post('/register' , cors(), async (req, res)=>{
     let telefono = req.body.email
     let nombre = req.body.nombre
     let invitados = req.body.invitados
