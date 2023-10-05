@@ -36,7 +36,7 @@ app.post('/verifyUser', async (req, res)=>{
    
     const email = req.body.email
   
-    const existe = await pool.query(`SELECT * FROM users WHERE user = "${email}"`)
+    const existe = await pool.query(`SELECT * FROM users WHERE telefono = "${email}"`)
    
     if(existe[0].length >= 1){
        
@@ -50,14 +50,15 @@ app.post('/verifyUser', async (req, res)=>{
     }
 })
 app.post('/register', async (req, res)=>{
-    let email = req.body.email
+    let telefono = req.body.email
     let nombre = req.body.nombre
     let invitados = req.body.invitados
 
-    const existe = await pool.query(`UPDATE users SET user = "${email}", nombre = "${nombre}", invitados = "${invitados}" where user = "${email}"`)
-    if(existe[0].length >= 1){
+    const existe = await pool.query(`UPDATE users SET telefono = "${telefono}", nombre = "${nombre}", invitados = "${invitados}" where telefono = "${telefono}"`)
+  
+    if(existe[0].affectedRows >= 1){
        
-        
+        console.log('success')
         res.json(existe[0][0])
         
     }
