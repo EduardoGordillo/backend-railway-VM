@@ -6,6 +6,7 @@ import cors from "cors";
 const app = express();
 
 app.use(cors());
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -53,8 +54,9 @@ app.post('/register', async (req, res)=>{
     let telefono = req.body.email
     let nombre = req.body.nombre
     let invitados = req.body.invitados
+    let asistencia = req.body.asistencia
 
-    const existe = await pool.query(`UPDATE users SET telefono = "${telefono}", nombre = "${nombre}", invitados = "${invitados}" where telefono = "${telefono}"`)
+    const existe = await pool.query(`UPDATE users SET telefono = "${telefono}", nombre = "${nombre}", invitados = "${invitados}", asistencia = "${asistencia}" where telefono = "${telefono}"`)
   
     if(existe[0].affectedRows >= 1){
        
