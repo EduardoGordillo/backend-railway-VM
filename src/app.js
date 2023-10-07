@@ -32,24 +32,6 @@ app.get('/create',async(req,res)=>{
     await pool.query('INSERT INTO users(user, invitados) values("gabriel@hotmail.com", 0)');
     res.redirect('/users')
 })
-app.post('/verifyUser', cors(), async (req, res)=>{
-    
-   
-    const email = req.body.email
-  
-    const existe = await pool.query(`SELECT * FROM users WHERE telefono = "${email}"`)
-   
-    if(existe[0].length >= 1){
-       
-        
-        res.json(existe[0][0])
-        
-    }
-    else{
-        res.json('not found')
-        res.status(400);
-    }
-})
 app.post('/register' , cors(), async (req, res)=>{
     let telefono = req.body.email
     
@@ -69,5 +51,24 @@ app.post('/register' , cors(), async (req, res)=>{
         res.status(400);
     }
 })
+app.post('/verifyUser', cors(), async (req, res)=>{
+    
+   
+    const email = req.body.email
+  
+    const existe = await pool.query(`SELECT * FROM users WHERE telefono = "${email}"`)
+   
+    if(existe[0].length >= 1){
+       
+        
+        res.json(existe[0][0])
+        
+    }
+    else{
+        res.json('not found')
+        res.status(400);
+    }
+})
+
 app.listen(PORT);
 console.log("Server on port: ", PORT)
