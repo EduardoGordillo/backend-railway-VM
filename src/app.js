@@ -38,7 +38,7 @@ app.post('/register' , cors(), async (req, res)=>{
     let invitados = req.body.invitados
     let asistencia = req.body.asistencia
 
-    const existe = await pool.query(`UPDATE users SET telefono = "${telefono}", invitados = "${invitados}", asistencia = "${asistencia}" where telefono = "${telefono}"`)
+    const existe = await pool.query(`UPDATE users SET telefono = "${telefono}", asistencia = "${asistencia}" where telefono = "${telefono}"`)
   
     if(existe[0].affectedRows >= 1){
        
