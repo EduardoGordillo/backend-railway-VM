@@ -32,31 +32,31 @@ app.get('/create',async(req,res)=>{
     await pool.query('INSERT INTO users(user, invitados) values("gabriel@hotmail.com", 0)');
     res.redirect('/users')
 })
-app.post('/register' , cors(), async (req, res)=>{
-    let telefono = req.body.email
-    
-    let invitados = req.body.invitados
-    let asistencia = req.body.asistencia
+app.post('/register', cors(), async (req, res) => {
+    const telefono = req.body.email;
+    const asistencia = req.body.asistencia;
 
-    const existe = await pool.query(`UPDATE users SET telefono = "${telefono}", asistencia = "${asistencia}" where telefono = "${telefono}"`)
-  
-    if(existe[0].affectedRows >= 1){
-       
-        console.log('success')
-        res.json(existe[0][0])
-        
+    try {
+        const updateQuery = 'UPDATE users SET telefono = ?, asistencia = ? WHERE telefono = ?';
+        const [result] = await pool.query(updateQuery, [telefono, asistencia, telefono]);
+
+        if (result.affectedRows >= 1) {
+            console.log('Success');
+            res.json(result);
+        } else {
+            res.status(400).json('Not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json('Internal Server Error');
     }
-    else{
-        res.json('not found')
-        res.status(400);
-    }
-})
+});
 app.post('/verifyUser', cors(), async (req, res)=>{
     
    
     const email = req.body.email
-  
-    const existe = await pool.query(`SELECT * FROM users WHERE telefono = "${email}"`)
+    const query = `SELECT * FROM users WHERE telefono = ?`
+    const existe = await pool.query(query, [email])
    
     if(existe[0].length >= 1){
        
